@@ -1,0 +1,50 @@
+allow-lan: true
+mode: rule
+# 默认情况下, Clash 将日志打印到 STDOUT
+# 日志级别: info / warning / error / debug / silent
+log-level: silent
+external-controller: 0.0.0.0:9090
+external-ui: /etc/clash/dashboard
+
+dns:
+        enable: true
+        listen: 0.0.0.0:53
+        enhanced-mode: fake-ip
+        fake-ip-range: 198.18.0.1/16
+        fake-ip-filter:
+                - '*.lan'
+        nameserver:
+                - 114.114.114.114
+                - 8.8.8.8
+                - tcp://8.8.8.8:53
+                - https://1.1.1.1/dns-query
+tun:
+        enable: true
+        stack: system
+        dns-hijack:
+                - any:53
+        auto-route: true
+        # auto-redir: true
+        auto-detect-interface: true
+
+proxies:
+proxy-groups:
+        - name: proxy
+          type: select
+          proxies:
+                  - DIRECT
+rules:
+        - DOMAIN-SUFFIX, google.com, proxy
+        - DOMAIN-KEYWORD, google, proxy
+        - DOMAIN-SUFFIX, youtube.com, proxy
+        - DOMAIN-SUFFIX, android.com, proxy
+        - DOMAIN-SUFFIX, github.com, proxy
+        - DOMAIN-SUFFIX, teddysun.com, proxy
+        - DOMAIN-SUFFIX, maxmind.com, proxy
+        - DOMAIN-SUFFIX, edu.cn, DIRECT
+        - IP-CIDR, 127.0.0.0/8, DIRECT
+        - IP-CIDR, 192.168.0.0/16, DIRECT
+        - SRC-PORT, 8999, DIRECT
+        - PROCESS-NAME, qbittorrent-nox, DIRECT
+        - GEOIP, CN, DIRECT
+        - MATCH, proxy
