@@ -1,0 +1,13 @@
+[Unit]
+Description=Clash daemon, A rule-based proxy written in go
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Restart=always
+ExecStartPre=/usr/bin/sleep 10
+ExecStart=/etc/clash/clash -d /etc/clash
+
+[Install]
+WantedBy=multi-user.target
