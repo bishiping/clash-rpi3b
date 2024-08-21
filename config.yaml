@@ -1,5 +1,6 @@
 allow-lan: true
 mode: rule
+ipv6: false
 # 默认情况下, Clash 将日志打印到 STDOUT
 # 日志级别: info / warning / error / debug / silent
 log-level: silent
@@ -18,6 +19,8 @@ dns:
                 - 8.8.8.8
                 - tcp://8.8.8.8:53
                 - https://1.1.1.1/dns-query
+        nameserver-policy:
+                '+.lan': 192.168.1.1 # 指定硬路由IP地址，需要在路由器端做dns劫持，比如指定raspberrypi.lan为192.168.1.2
 tun:
         enable: true
         stack: system
@@ -28,10 +31,22 @@ tun:
         auto-detect-interface: true
 
 proxies:
+        - name: "us-ss"
+          type: ss
+          server: 1.2.3.4
+          port: 1234
+          cipher: aes-256-gcm
+          password: "password0"
+          plugin: obfs
+          plugin-opts:
+                  mode: tls
+                  host: bing.com
+                  
 proxy-groups:
         - name: proxy
           type: select
           proxies:
+                  - us-ss
                   - DIRECT
 rules:
         - DOMAIN-SUFFIX, google.com, proxy
