@@ -61,5 +61,6 @@ rules:
         - IP-CIDR, 192.168.0.0/16, DIRECT
         - SRC-PORT, 8999, DIRECT
         - PROCESS-NAME, qbittorrent-nox, DIRECT
+        - GEOIP, LAN, DIRECT
         - GEOIP, CN, DIRECT
         - MATCH, proxy
