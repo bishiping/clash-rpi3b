@@ -20,7 +20,7 @@ dns:
                 - tcp://8.8.8.8:53
                 - https://1.1.1.1/dns-query
         nameserver-policy:
-                '+.lan': 192.168.1.1 # 指定硬路由IP地址，需要在路由器端做dns劫持，比如指定raspberrypi.lan为192.168.1.2
+                '+.lan': 192.168.1.1 # 指定硬路由IP做dns服务器解析
 tun:
         enable: true
         stack: system
@@ -56,6 +56,8 @@ rules:
         - DOMAIN-SUFFIX, github.com, proxy
         - DOMAIN-SUFFIX, teddysun.com, proxy
         - DOMAIN-SUFFIX, maxmind.com, proxy
+        - DOMAIN, www.right.com.cn, DIRECT
+        - DOMAIN-SUFFIX, zvo.cn, DIRECT
         - DOMAIN-SUFFIX, edu.cn, DIRECT
         - IP-CIDR, 127.0.0.0/8, DIRECT
         - IP-CIDR, 192.168.0.0/16, DIRECT
