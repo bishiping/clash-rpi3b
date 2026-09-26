@@ -6,7 +6,6 @@ After=network.target
 Type=simple
 User=root
 Restart=always
-ExecStartPre=/usr/bin/sleep 5
 ExecStart=/etc/clash/clash -d /etc/clash
 
 [Install]
