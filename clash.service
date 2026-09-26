@@ -4,9 +4,11 @@ After=network.target
 
 [Service]
 Type=simple
-User=root
-Restart=always
+User=pi
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
 ExecStart=/etc/clash/clash -d /etc/clash
+Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
